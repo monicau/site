@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
 import BlogRoll from '../components/BlogRoll'
@@ -33,11 +32,6 @@ export const IndexPageTemplate = ({
               <div className="content">
                 <div className="column is-12">
                   <BlogRoll />
-                  <div className="column is-12 has-text-centered">
-                    <Link className="btn" to="/comics">
-                      Read more
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>
@@ -51,11 +45,11 @@ export const IndexPageTemplate = ({
 IndexPageTemplate.propTypes = {
   title: PropTypes.string,
   heading: PropTypes.string,
+  numPages: PropTypes.object
 }
 
 const IndexPage = ({ data }) => {
   const { frontmatter } = data.markdownRemark
-
   return (
     <Layout>
       <IndexPageTemplate

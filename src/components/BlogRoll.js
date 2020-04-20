@@ -6,8 +6,8 @@ import PreviewCompatibleImage from './PreviewCompatibleImage'
 class BlogRoll extends React.Component {
   render() {
     const { data } = this.props
-    const { edges: posts } = data.allMarkdownRemark
-
+    const { edges: posts, totalCount } = data.allMarkdownRemark
+    const numPages = Math.ceil(totalCount / 10)
     return (
       <div className="columns is-multiline">
         {posts &&
@@ -18,9 +18,14 @@ class BlogRoll extends React.Component {
                   post.frontmatter.featuredpost ? 'is-featured' : ''
                 }`}
               >
+                <p className="post-meta">
+                  <span className="text-right is-block">
+                    {post.frontmatter.date}
+                  </span>
+                </p>
                 <header>
                   {post.frontmatter.featuredimage ? (
-                    <div className="featured-thumbnail">
+                    <div>
                       <Link
                       className="title has-text-primary is-size-4"
                       to={post.fields.slug}
@@ -38,15 +43,32 @@ class BlogRoll extends React.Component {
                 <p>
                   {post.excerpt}
                 </p>
-                <p className="post-meta">
-                  <span className="text-right is-block">
-                    {post.frontmatter.date}
-                  </span>
-                </p>
-                <hr />
+                <hr className="comic-divider" />
               </article>
             </div>
           ))}
+          <div className="column is-12 has-text-centered">
+            { numPages > 1 ? 
+              <Link className="btn" to={`/comics/page/2`}>
+                Next page
+              </Link>
+              : ""
+          }
+          </div>
+          <div className="column pagination is-12 has-text-centered">
+          {
+            numPages > 1 ? 
+              Array.from({length: numPages}, (_, i) => (
+                i === 0? 
+                <span key={`pagenum_${i+1}`} className="active-pagenumber">{i + 1}</span>
+                :
+                <Link key={`page_link_${i + 1}`} to={`/comics/pages/${i + 1}`}>
+                  {i + 1}
+                </Link>
+              ))
+              :""
+          }
+          </div>
       </div>
     )
   }
@@ -67,7 +89,9 @@ export default () => (
         allMarkdownRemark(
           sort: { order: DESC, fields: [frontmatter___date] }
           filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+          limit: 10
         ) {
+          totalCount
           edges {
             node {
               excerpt(pruneLength: 400)

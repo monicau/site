@@ -1,5 +1,5 @@
 ---
 templateKey: index-page
-title: Comics and stuff
-heading: Comics and stuff
+title: Comics & stuff
+heading: I draw comics & stuff
 ---

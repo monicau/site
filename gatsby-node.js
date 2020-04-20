@@ -30,7 +30,8 @@ exports.createPages = ({ actions, graphql }) => {
     }
 
     const posts = result.data.allMarkdownRemark.edges
-
+    let comic_count = 0
+    // Single pages 
     posts.forEach(edge => {
       const id = edge.node.id
       createPage({
@@ -44,6 +45,9 @@ exports.createPages = ({ actions, graphql }) => {
           id,
         },
       })
+      if (edge.node.frontmatter.templateKey === 'blog-post') {
+        comic_count += 1
+      }
     })
 
     // Tag pages:
@@ -66,6 +70,25 @@ exports.createPages = ({ actions, graphql }) => {
         component: path.resolve(`src/templates/tags.js`),
         context: {
           tag,
+        },
+      })
+    })
+
+    //  Paginate comic pages
+    const postsPerPage = 10
+    const numPages = Math.ceil(comic_count / postsPerPage)
+    Array.from({ length: numPages}).forEach((_, i) => {
+      createPage({
+        path: `/comics/page/${i + 1}`,
+        component: path.resolve(
+          `src/templates/blog-list.js`
+        ),
+        context: {
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+          totalPosts: comic_count,
         },
       })
     })
