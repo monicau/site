@@ -1,12 +1,11 @@
 import React from "react"
-import { Link, graphql, StaticQuery } from 'gatsby'
-import Layout from "../components/layout"
+import { Link, graphql } from 'gatsby'
+import Layout from "../components/Layout"
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 
 export default class BlogList extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
-    console.log('context',this.props.pageContext)
     return (
       <Layout>
         <section className="section section--gradient">
@@ -55,7 +54,7 @@ export default class BlogList extends React.Component {
                     <div className="column is-12 has-text-centered">
                       {
                         this.props.pageContext.currentPage > 1 ?
-                        <Link className="btn" to={`/comics/page/${this.props.pageContext.currentPage-1}`}>
+                        <Link className="btn" to={`/${this.props.pageContext.category}/page/${this.props.pageContext.currentPage-1}`}>
                           Previous page
                         </Link>
                         : ""
@@ -63,7 +62,7 @@ export default class BlogList extends React.Component {
                        &nbsp;
                       {
                         this.props.pageContext.currentPage < this.props.pageContext.numPages ?
-                          <Link className="btn" to={`/comics/page/${this.props.pageContext.currentPage+1}`}>
+                          <Link className="btn" to={`/${this.props.pageContext.category}/page/${this.props.pageContext.currentPage+1}`}>
                             Next page
                           </Link>
                         : ""
@@ -72,7 +71,7 @@ export default class BlogList extends React.Component {
                     <div className="column pagination is-12 has-text-centered">
                       {
                         Array.from({length: this.props.pageContext.numPages}, (_, i) => (
-                          this.props.pageContext.currentPage == i + 1?
+                          this.props.pageContext.currentPage === i + 1?
                           <span key={`pagenum_${i+1}`} className="active-pagenumber">{i + 1}</span>
                           :
                           <Link key={`page_link_${i + 1}`} to={`/comics/pages/${i + 1}`}>
@@ -92,10 +91,10 @@ export default class BlogList extends React.Component {
   }
 }
 export const blogListQuery = graphql`
-  query blogListQuery($skip: Int!, $limit: Int!) {
+  query blogListQuery($skip: Int!, $limit: Int!, $category: String) {
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+      filter: { frontmatter: { templateKey: { eq: "blog-post" }, category: { eq: $category } } }
       limit: $limit
       skip: $skip
     ) {
@@ -111,6 +110,7 @@ export const blogListQuery = graphql`
             templateKey
             date(formatString: "MMMM DD, YYYY")
             featuredpost
+            category
             featuredimage {
               childImageSharp {
                 fluid(maxWidth: 1500, quality: 100) {

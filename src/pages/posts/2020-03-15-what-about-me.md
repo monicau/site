@@ -5,6 +5,7 @@ date: 2020-03-15T15:11:14.484Z
 featuredpost: false
 featuredimage: /img/comics_used-to-make.png
 description: hello
+category: comics
 tags:
   - oliver
 ---
