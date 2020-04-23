@@ -1,7 +1,9 @@
 import React from "react"
 import { Link, graphql } from 'gatsby'
 import Layout from "../components/Layout"
-import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
+import{ HTMLContent } from '../components/Content'
+import Tags from '../components/Tags'
+import link from '../img/link.svg'
 
 export default class BlogList extends React.Component {
   render() {
@@ -17,35 +19,28 @@ export default class BlogList extends React.Component {
                   {posts &&
                     posts.map(({ node: post }) => (
                       <div className="is-parent column is-12" key={post.id}>
-                        <article
-                          className={`blog-list-item tile is-child ${
-                            post.frontmatter.featuredpost ? 'is-featured' : ''
-                          }`}
-                        >
-                          <header>
-                            {post.frontmatter.featuredimage ? (
-                              <div className="featured-thumbnail">
-                                <Link
-                                className="title has-text-primary is-size-4"
-                                to={post.fields.slug}
-                                >
-                                  <PreviewCompatibleImage
-                                    imageInfo={{
-                                      image: post.frontmatter.featuredimage,
-                                      alt: `featured image thumbnail for post ${post.frontmatter.title}`,
-                                    }}
-                                  />
-                                </Link>
-                              </div>
-                            ) : null}
-                          </header>
-                          <p>
-                            {post.excerpt}
-                          </p>
+                        <article className='blog-list-item tile is-child'>
+                          <div className="featured-thumbnail">
+                              <HTMLContent content={post.html} />
+                          </div>
                           <p className="post-meta">
-                            <span className="text-right is-block">
+                            <div className="meta-icons">
+                            <div style={{padding: '5px'}}>
                               {post.frontmatter.date}
-                            </span>
+                            </div>&nbsp;/&nbsp;
+                              <Tags tags={post.frontmatter.tags} />
+                              /&nbsp;
+                              <Link to={post.fields.slug} title='permalink' className='btn-meta'>
+                                <img
+                                  className='fas fa-lg'
+                                  src={link}
+                                  alt='Shareable link'
+                                  style={{width:'15px'}}
+                                />
+                                &nbsp;
+                                link
+                              </Link>
+                            </div>
                           </p>
                           <hr className="comic-divider" />
                         </article>
@@ -100,24 +95,15 @@ export const blogListQuery = graphql`
     ) {
       edges {
         node {
-          excerpt(pruneLength: 400)
           id
           fields {
             slug
           }
+          html
           frontmatter {
-            title
-            templateKey
             date(formatString: "MMMM DD, YYYY")
-            featuredpost
             category
-            featuredimage {
-              childImageSharp {
-                fluid(maxWidth: 1500, quality: 100) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
+            tags
           }
         }
       }

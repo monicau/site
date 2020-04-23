@@ -10,6 +10,8 @@ $primary-invert: $kaldi-red-invert
 $body-color: #333
 $black: #2b2523
 
+
+
 .navbar .navbar-menu
   box-shadow:none !important
 
@@ -130,6 +132,8 @@ $menu-label-color: $white-ter
 
 @import "~bulma"
 
+a
+  color: $primary
 
 // responsiveness
 +tablet-only
@@ -161,3 +165,35 @@ hr.comic-divider
 
 .section
   padding-top: 2rem
+
+.post-meta
+  text-align: right
+  font-size: 15px
+
+.meta-icons
+  display: flex
+  justify-content: flex-end
+  align-items: center
+
+.btn-meta
+  border: 0
+  background: none
+  font-size: 15px
+  padding: 5px
+  color: $primary
+  &:hover, &:focus
+    background: whitesmoke
+    cursor: pointer
+
+.popup-meta 
+  position: absolute
+  max-width: 50vw
+  right: 0px
+  top: 35px
+  background: white
+  text-align: right
+  padding: 5px 0 5px 5px
+  overflow-x: auto
+  span
+    padding-left: 5px
+    

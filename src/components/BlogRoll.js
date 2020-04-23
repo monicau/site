@@ -19,7 +19,7 @@ class BlogRoll extends React.Component {
                 }`}
               >
                 <p className="post-meta">
-                  <span className="text-right is-block">
+                  <span className="is-block">
                     {post.frontmatter.date}
                   </span>
                 </p>
