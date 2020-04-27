@@ -10,8 +10,6 @@ $primary-invert: $kaldi-red-invert
 $body-color: #333
 $black: #2b2523
 
-
-
 .navbar .navbar-menu
   box-shadow:none !important
 
@@ -52,7 +50,9 @@ $black: #2b2523
     display: flex
     justify-content: center
     align-items: center
-
+button:hover
+  text-decoration: underline
+  color: $primary
 .btn
     display: inline-block
     padding: 12px 16px 10px
@@ -134,7 +134,16 @@ $menu-label-color: $white-ter
 
 a
   color: $primary
+  //border-bottom: 1px dashed $primary
+  &:hover
+    color: $primary
+    text-decoration: underline
 
+.navbar-item
+  color: $primary
+a.navbar-item:hover
+  color: $primary
+  
 // responsiveness
 +tablet-only
   .blog-list-item .featured-thumbnail
@@ -165,6 +174,10 @@ hr.comic-divider
 
 .section
   padding-top: 2rem
+
+.category-active
+  //border-bottom: 1px dashed $black
+  margin: 0 5px
 
 .post-meta
   text-align: right

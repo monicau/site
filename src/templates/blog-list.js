@@ -1,15 +1,39 @@
 import React from "react"
 import { Link, graphql } from 'gatsby'
 import Layout from "../components/Layout"
-import{ HTMLContent } from '../components/Content'
-import Tags from '../components/Tags'
-import link from '../img/link.svg'
+import BlogItem from '../components/BlogItem'
 
 export default class BlogList extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
     return (
       <Layout>
+      <div
+        className="margin-top-0"
+      >
+        <div
+          style={{
+            textAlign: 'center',
+            flexDirection: 'column',
+          }}
+        >
+        <h1
+          className="has-text-weight-bold is-size-3-mobile is-size-2-tablet is-size-1-widescreen"
+        > 
+          { this.props.pageContext.category === 'comics' ?
+          <span>comics</span>
+          :
+          <span><Link to={'/comics/page/1'} title="comics">comics</Link></span>
+          }
+          &nbsp;&&nbsp;
+          { this.props.pageContext.category === 'draws' ?
+          <span>stuff</span>
+          :
+          <span><Link to={'/draws/page/1'} title="drawings">stuff</Link></span>
+          }
+            </h1>
+          </div>
+        </div>
         <section className="section section--gradient">
           <div className="container content">
             <div className="columns">
@@ -17,29 +41,7 @@ export default class BlogList extends React.Component {
                 {posts &&
                   posts.map(({ node: post }) => (
                     <div className="is-parent column is-12" key={post.id}>
-                      <article className='blog-list-item tile is-child'>
-                        <HTMLContent content={post.html} />
-                        <p className="post-meta">
-                          <div className="meta-icons">
-                          <div style={{padding: '5px'}}>
-                            {post.frontmatter.date}
-                          </div>&nbsp;/&nbsp;
-                            <Tags tags={post.frontmatter.tags} />
-                            /&nbsp;
-                            <Link to={post.fields.slug} title='permalink' className='btn-meta'>
-                              <img
-                                className='fas fa-lg'
-                                src={link}
-                                alt='Shareable link'
-                                style={{width:'15px'}}
-                              />
-                              &nbsp;
-                              link
-                            </Link>
-                          </div>
-                        </p>
-                        <hr className="comic-divider" />
-                      </article>
+                      <BlogItem post={post} />
                     </div>
                 ))}
                 <div className="column is-12 has-text-centered">

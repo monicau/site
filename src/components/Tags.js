@@ -18,9 +18,8 @@ const Tags = ({ tags }) => {
           className='fas fa-lg'
           src={tag}
           alt='Tags'
-          style={{width:'15px'}}
+          style={{width:'15px', marginRight: '5px'}}
         />
-        &nbsp;
         tags
       </button>
       <div

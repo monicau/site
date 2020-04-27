@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import BlogRoll from '../components/BlogRoll'
+import ComicExcerpt from '../components/ComicExcerpt'
+import DrawExcerpt from '../components/DrawExcerpt'
 
 export const IndexPageTemplate = ({
   title,
   heading
-}) => (
-  <div>
+}) => {
+  const [category, setCategory] = useState('comics')
+  return <div>
     <div
       className="margin-top-0"
     >
@@ -21,9 +23,18 @@ export const IndexPageTemplate = ({
         <h1
           className="has-text-weight-bold is-size-3-mobile is-size-2-tablet is-size-1-widescreen"
         > 
-          {title}
+          { category === 'comics' ?
+          <span>comics</span>
+          :
+          <span><a onClick={()=>setCategory('comics')} href="#" title="comics">comics</a></span>
+          }
+          &nbsp;&&nbsp;
+          { category === 'draws' ?
+          <span>stuff</span>
+          :
+          <span><a onClick={()=>setCategory('draws')} href="#" title="drawings">stuff</a></span>
+          }
         </h1>
-        <h2>{heading}</h2>
       </div>
     </div>
     <section className="section section--gradient">
@@ -33,7 +44,11 @@ export const IndexPageTemplate = ({
             <div className="column is-10 is-offset-1">
               <div className="content">
                 <div className="column is-12">
-                  <BlogRoll />
+                  { category === 'comics'?
+                    <ComicExcerpt />
+                    :
+                    <DrawExcerpt />
+                  }
                 </div>
               </div>
             </div>
@@ -42,7 +57,7 @@ export const IndexPageTemplate = ({
       </div>
     </section>
   </div>
-)
+}
 
 IndexPageTemplate.propTypes = {
   title: PropTypes.string,
