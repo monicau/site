@@ -1,6 +1,6 @@
 import React from 'react'
 
-import logo from '../img/logo.svg'
+import logo from '../img/kiwi.png'
 import instagram from '../img/social/instagram.svg'
 import twitter from '../img/social/twitter.svg'
 
@@ -11,8 +11,8 @@ const Footer = class extends React.Component {
         <div className="content has-text-centered">
           <img
             src={logo}
-            alt="Kaldi"
-            style={{ width: '14em', height: '10em' }}
+            alt="Kiwi"
+            style={{ width: '10em'}}
           />
         </div>
         <div className="content has-text-centered has-background-black has-text-white-ter">
@@ -23,7 +23,7 @@ const Footer = class extends React.Component {
                 </section>
               </div>
               <div className="column is-4 social">
-                <a title="twitter" href="https://twitter.com">
+                <a title="twitter" href="https://twitter.com/kiwiful" target="_blank" rel="noopener">
                   <img
                     className="fas fa-lg"
                     src={twitter}
@@ -31,13 +31,13 @@ const Footer = class extends React.Component {
                     style={{ width: '1em', height: '1em' }}
                   />
                 </a>
-                <a title="instagram" href="https://instagram.com">
+                {/* <a title="instagram" href="">
                   <img
                     src={instagram}
                     alt="Instagram"
                     style={{ width: '1em', height: '1em' }}
                   />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
